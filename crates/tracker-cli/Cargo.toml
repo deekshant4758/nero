@@ -1,0 +1,19 @@
+[package]
+name    = "tracker-cli"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "tracker"
+path = "src/main.rs"
+
+[dependencies]
+tracker-core      = { path = "../tracker-core" }
+tracker-db        = { path = "../tracker-db" }
+tracker-collector = { path = "../tracker-collector" }
+tokio             = { workspace = true }
+tracing           = { workspace = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+chrono            = { workspace = true }
+thiserror         = { workspace = true }
+anyhow = "1.0.102"

@@ -1,0 +1,12 @@
+[package]
+name    = "tracker-db"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tracker-core = { path = "../tracker-core" }
+thiserror    = { workspace = true }
+serde_json   = { workspace = true }
+rusqlite     = { version = "0.31", features = ["bundled"] }
+tokio        = { workspace = true }
+uuid         = { workspace = true }

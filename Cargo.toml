@@ -1,0 +1,18 @@
+[workspace]
+members = [
+    "apps/desktop/src-tauri",
+    "crates/tracker-core",
+    "crates/tracker-db",
+    "crates/tracker-collector",
+    "crates/tracker-cli",
+]
+resolver = "2"
+
+[workspace.dependencies]
+serde       = { version = "1", features = ["derive"] }
+serde_json  = "1"
+thiserror   = "1"
+chrono      = { version = "0.4", features = ["serde"] }
+uuid        = { version = "=1.8.0", features = ["v4", "serde"] }
+tokio       = { version = "1", features = ["full"] }
+tracing     = "0.1"
