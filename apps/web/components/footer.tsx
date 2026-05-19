@@ -1,83 +1,80 @@
 import Link from "next/link";
+import { siteConfig } from "@/lib/site";
 import { NeroLogo } from "./nero-logo";
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-neutral-200 w-full mt-auto">
-      <div className="px-8 py-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-5 gap-8">
+    <footer className="mt-auto w-full border-t border-neutral-200 bg-white">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-5">
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-6">
+            <Link href="/" className="mb-6 flex items-center gap-2">
               <NeroLogo />
-              <span className="font-semibold text-base text-neutral-950">nero</span>
+              <span className="text-base font-semibold text-neutral-950">{siteConfig.name}</span>
             </Link>
-            <p className="text-xs text-neutral-500">
-              Beautiful insights. Your data never leaves your PC.
-            </p>
+            <p className="text-xs text-neutral-500">{siteConfig.description}</p>
           </div>
 
           <div>
-            <h4 className="font-semibold text-sm text-neutral-950 mb-4">Product</h4>
-            <nav className="space-y-2">
+            <h4 className="mb-4 text-sm font-semibold text-neutral-950">Product</h4>
+            <nav className="flex flex-col space-y-2">
               <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-950">
                 Features
               </Link>
-              <Link href="/changelog" className="text-sm text-neutral-600 hover:text-neutral-950">
+              <Link href={siteConfig.changelogHref} className="text-sm text-neutral-600 hover:text-neutral-950">
                 Changelog
               </Link>
-              <a href="https://github.com" className="text-sm text-neutral-600 hover:text-neutral-950">
+              <a href={siteConfig.repoUrl} target="_blank" rel="noreferrer" className="text-sm text-neutral-600 hover:text-neutral-950">
                 GitHub
               </a>
             </nav>
           </div>
 
           <div>
-            <h4 className="font-semibold text-sm text-neutral-950 mb-4">Community</h4>
-            <nav className="space-y-2">
-              <a href="#" className="text-sm text-neutral-600 hover:text-neutral-950">
-                Discord
-              </a>
-              <a href="#" className="text-sm text-neutral-600 hover:text-neutral-950">
+            <h4 className="mb-4 text-sm font-semibold text-neutral-950">Community</h4>
+            <nav className="flex flex-col space-y-2">
+              <Link href={siteConfig.communityHref} className="text-sm text-neutral-600 hover:text-neutral-950">
+                Community Hub
+              </Link>
+              <a href={siteConfig.repoUrl} target="_blank" rel="noreferrer" className="text-sm text-neutral-600 hover:text-neutral-950">
                 GitHub Discussions
               </a>
-              <a href="#" className="text-sm text-neutral-600 hover:text-neutral-950">
+              <a href={`${siteConfig.repoUrl}/issues`} target="_blank" rel="noreferrer" className="text-sm text-neutral-600 hover:text-neutral-950">
                 Issues
               </a>
             </nav>
           </div>
 
           <div>
-            <h4 className="font-semibold text-sm text-neutral-950 mb-4">Legal</h4>
-            <nav className="space-y-2">
-              <Link href="/privacy" className="text-sm text-neutral-600 hover:text-neutral-950">
+            <h4 className="mb-4 text-sm font-semibold text-neutral-950">Legal</h4>
+            <nav className="flex flex-col space-y-2">
+              <Link href={siteConfig.privacyHref} className="text-sm text-neutral-600 hover:text-neutral-950">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-sm text-neutral-600 hover:text-neutral-950">
+              <Link href={siteConfig.termsHref} className="text-sm text-neutral-600 hover:text-neutral-950">
                 Terms of Service
               </Link>
             </nav>
           </div>
 
           <div>
-            <h4 className="font-semibold text-sm text-neutral-950 mb-4">Support</h4>
-            <nav className="space-y-2">
-              <Link href="/docs" className="text-sm text-neutral-600 hover:text-neutral-950">
+            <h4 className="mb-4 text-sm font-semibold text-neutral-950">Support</h4>
+            <nav className="flex flex-col space-y-2">
+              <Link href={siteConfig.docsHref} className="text-sm text-neutral-600 hover:text-neutral-950">
                 Documentation
               </Link>
-              <a href="#" className="text-sm text-neutral-600 hover:text-neutral-950">
-                Support Email
+              <a href={siteConfig.supportHref} className="text-sm text-neutral-600 hover:text-neutral-950">
+                Support the project
               </a>
             </nav>
           </div>
         </div>
 
-        <div className="border-t border-neutral-200 mt-8 pt-8 flex justify-between items-center">
+        <div className="mt-8 flex flex-col gap-3 border-t border-neutral-200 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-neutral-500">
-            © 2024 nero. MIT licensed. Made with <span className="text-red-500">♥</span>
+            © 2026 {siteConfig.name}. MIT licensed. Made with <span className="text-red-500">♥</span>
           </p>
-          <p className="text-xs text-neutral-500">
-            Crafted with attention to detail.
-          </p>
+          <p className="text-xs text-neutral-500">Crafted with attention to detail.</p>
         </div>
       </div>
     </footer>
