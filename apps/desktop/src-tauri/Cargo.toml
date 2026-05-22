@@ -1,0 +1,21 @@
+[package]
+name    = "nero-activity-tracker"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1", features = [] }
+
+[dependencies]
+tauri       = { version = "1", features = ["shell-open"] }
+serde       = { version = "1", features = ["derive"] }
+serde_json  = "1"
+tracker-core      = { path = "../../../crates/tracker-core" }
+tracker-db        = { path = "../../../crates/tracker-db" }
+tracker-collector = { path = "../../../crates/tracker-collector" }
+tokio       = { version = "1", features = ["full"] }
+chrono      = { version = "0.4", features = ["serde"] }
+
+[features]
+default     = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
