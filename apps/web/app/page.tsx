@@ -65,7 +65,7 @@ export default function Home() {
             </Badge>
 
             <h1 className="mt-6 max-w-4xl text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Beautiful insights. Your data never leaves your PC.
+              Take complete control of your PC and your time. 
             </h1>
 
             <p className="mt-6 max-w-2xl text-pretty text-base leading-7 text-neutral-600 sm:text-lg">
