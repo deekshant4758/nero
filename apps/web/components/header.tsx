@@ -8,9 +8,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2.5">
           <NeroLogo />
-          <span className="font-semibold text-base leading-6 tracking-tight text-neutral-950">
+          <span className="font-semibold text-lg leading-6 tracking-tight text-neutral-950 sm:text-xl">
             {siteConfig.name}
           </span>
         </Link>

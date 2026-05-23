@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { siteConfig } from "@/lib/site";
+import Image from "next/image";
 import {
   BarChart3,
   Code,
@@ -55,7 +56,7 @@ export default function Home() {
       <Header />
 
       <main className="flex-1">
-        <section className="px-4 pt-16 pb-14 sm:px-6 lg:px-8 lg:pt-24">
+        <section className="px-4 pt-10 pb-14 sm:px-6 lg:px-8 lg:pt-16">
           <div className="mx-auto flex max-w-6xl flex-col items-center text-center">
             <Badge
               variant="outline"
@@ -103,6 +104,16 @@ export default function Home() {
                 <Monitor className="size-4" />
                 Windows now, more platforms later
               </div>
+            </div>
+            <div className="mt-12 w-full max-w-6xl overflow-hidden rounded-3xl  bg-neutral-50 p-2">
+              <Image
+                src="/hero-showcase.png"
+                alt="Nero desktop analytics dashboard preview"
+                width={1365}
+                height={768}
+                className="h-auto w-full rounded-2xl"
+                priority
+              />
             </div>
           </div>
         </section>
