@@ -9,6 +9,7 @@ import Apps from "./pages/Apps";
 import Timeline from "./pages/Timeline";
 import Weekly from "./pages/Weekly";
 import SettingsPage from "./pages/Settings";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 type Page = "dashboard" | "apps" | "timeline" | "weekly" | "settings";
 type DateFilter = "today" | "yesterday" | string;
@@ -73,6 +74,96 @@ function stepDate(date: DateFilter, direction: -1 | 1): DateFilter {
   if (newDate === yesterdayStr) return "yesterday";
   if (current > now) return "today";
   return newDate;
+}
+
+const winBtn: React.CSSProperties = {
+  width: 34,
+  height: 26,
+  border: "none",
+  background: "transparent",
+  color: "var(--text-2)",
+  borderRadius: 6,
+  cursor: "pointer",
+  fontSize: 12,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  transition: "all 0.15s ease",
+};
+
+const dragRegionStyle: React.CSSProperties & { WebkitAppRegion: "drag" } = {
+  flex: 1,
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  WebkitAppRegion: "drag",
+};
+
+const noDragStyle: React.CSSProperties & { WebkitAppRegion: "no-drag" } = {
+  display: "flex",
+  gap: 6,
+  WebkitAppRegion: "no-drag",
+};
+
+function TopBar() {
+  const appWindow = getCurrentWindow();
+
+  return (
+    <div
+      style={{
+        height: 38,
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "0 10px",
+        background: "var(--surface)",
+        borderBottom: "1px solid var(--border)",
+        userSelect: "none",
+      }}
+    >
+      {/* LEFT DRAG AREA */}
+      <div
+        data-tauri-drag-region
+        style={dragRegionStyle}
+      >
+        <span style={{ fontSize: 12, fontWeight: 600 }}>
+          Nero
+        </span>
+      </div>
+
+      {/* RIGHT CONTROLS */}
+      <div
+        style={noDragStyle}
+      >
+        <button
+          onClick={() => {
+            console.log("Minimizing window");
+            appWindow.minimize();
+          }}
+          style={winBtn}
+        >
+          ─
+        </button>
+
+        <button onClick={() => {
+          console.log("Toggling maximize");
+          appWindow.toggleMaximize();
+        }} style={winBtn}>
+          □
+        </button>
+
+        <button
+          onClick={() => {
+            console.log("Closing window");
+            appWindow.close();
+          }}
+          style={{ ...winBtn, color: "#ef4444" }}
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default function App() {
@@ -192,6 +283,7 @@ export default function App() {
       </aside>
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <TopBar />
         <header
           style={{
             background: "var(--surface)",

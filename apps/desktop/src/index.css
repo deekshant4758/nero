@@ -77,3 +77,15 @@ body {
   animation: shimmer 1.4s infinite;
   border-radius: var(--radius-sm);
 }
+
+[data-tauri-drag-region] {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+button {
+  -webkit-app-region: no-drag;
+}

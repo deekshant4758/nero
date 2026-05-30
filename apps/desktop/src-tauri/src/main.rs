@@ -343,6 +343,7 @@ fn main() {
         .expect("Failed to open tracker database");
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_shell::init())
         .manage(AppState { db })
         .invoke_handler(tauri::generate_handler![
             get_daily_stats,
