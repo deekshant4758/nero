@@ -9,10 +9,13 @@ import Apps from "./pages/Apps";
 import Timeline from "./pages/Timeline";
 import Weekly from "./pages/Weekly";
 import SettingsPage from "./pages/Settings";
+import { isTauri } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
 type Page = "dashboard" | "apps" | "timeline" | "weekly" | "settings";
 type DateFilter = "today" | "yesterday" | string;
+
+const hasTauriWindow = isTauri();
 
 const NAV_ITEMS: { id: Page; icon: typeof BarChart3; label: string }[] = [
   { id: "dashboard", icon: BarChart3, label: "Stats" },
@@ -106,7 +109,30 @@ const noDragStyle: React.CSSProperties & { WebkitAppRegion: "no-drag" } = {
 };
 
 function TopBar() {
-  const appWindow = getCurrentWindow();
+  const appWindow = hasTauriWindow ? getCurrentWindow() : null;
+
+  const runWindowAction = async (action: "minimize" | "maximize" | "close") => {
+    console.log(`[TopBar] ${action} clicked`, { hasTauriWindow, hasWindow: !!appWindow });
+
+    if (!appWindow) {
+      console.warn(`[TopBar] ${action} skipped because the native window API is unavailable`);
+      return;
+    }
+
+    try {
+      if (action === "minimize") {
+        await appWindow.minimize();
+      } else if (action === "maximize") {
+        await appWindow.toggleMaximize();
+      } else {
+        await appWindow.close();
+      }
+
+      console.log(`[TopBar] ${action} completed`);
+    } catch (error) {
+      console.error(`[TopBar] ${action} failed`, error);
+    }
+  };
 
   return (
     <div
@@ -136,27 +162,24 @@ function TopBar() {
         style={noDragStyle}
       >
         <button
-          onClick={() => {
-            console.log("Minimizing window");
-            appWindow.minimize();
-          }}
+          onClick={() => void runWindowAction("minimize")}
+          disabled={!appWindow}
           style={winBtn}
         >
           ─
         </button>
 
-        <button onClick={() => {
-          console.log("Toggling maximize");
-          appWindow.toggleMaximize();
-        }} style={winBtn}>
+        <button
+          onClick={() => void runWindowAction("maximize")}
+          disabled={!appWindow}
+          style={winBtn}
+        >
           □
         </button>
 
         <button
-          onClick={() => {
-            console.log("Closing window");
-            appWindow.close();
-          }}
+          onClick={() => void runWindowAction("close")}
+          disabled={!appWindow}
           style={{ ...winBtn, color: "#ef4444" }}
         >
           ✕

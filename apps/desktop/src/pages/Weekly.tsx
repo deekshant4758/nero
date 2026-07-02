@@ -1,8 +1,9 @@
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 import { useWeekData, DateFilter } from "../hooks/useTracker";
 import { Card, SectionHeader, SkeletonCard, SkeletonBar } from "../components/ui";
+import { CHART_SERIES } from "../lib/chartColors";
 
 interface Props { date: DateFilter; }
 
@@ -71,8 +72,12 @@ export default function Weekly({ date }: Props) {
                 tick={{ fontSize: 11, fill: "var(--text-3)", fontFamily: "var(--font-sans)" }}
                 tickFormatter={v => `${Math.floor(v / 3600)}h`}
               />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(0,0,0,0.02)" }} />
-              <Bar dataKey="active_secs" fill="#111110" radius={[4, 4, 2, 2]} />
+              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(37,99,235,0.06)" }} />
+              <Bar dataKey="active_secs" radius={[4, 4, 2, 2]}>
+                {(summary?.days ?? []).map((_, index) => (
+                  <Cell key={index} fill={CHART_SERIES.weekly[index % CHART_SERIES.weekly.length]} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </Card>
@@ -111,7 +116,7 @@ export default function Weekly({ date }: Props) {
               <div style={{ background: "var(--surface-2)", borderRadius: 999, height: 5, overflow: "hidden" }}>
                 <div style={{
                   width: `${(day.active_secs / maxSecs) * 100}%`,
-                  height: "100%", background: "#111110", borderRadius: 999,
+                  height: "100%", background: CHART_SERIES.weekly[idx % CHART_SERIES.weekly.length], borderRadius: 999,
                   transition: "width 0.5s ease",
                 }} />
               </div>

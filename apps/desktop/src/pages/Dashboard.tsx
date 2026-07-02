@@ -9,8 +9,7 @@ import {
   Card, SectionHeader, ProgressBar, AppIcon,
   LegendDot, GhostButton, SkeletonCard, SkeletonBar,
 } from "../components/ui";
-
-const CATEGORY_COLORS = ["#111110", "#6b6b66", "#a3a3a0", "#d4d4cf"];
+import { CHART_SERIES } from "../lib/chartColors";
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
@@ -22,7 +21,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     }}>
       <p style={{ fontWeight: 500, marginBottom: 4 }}>{label}</p>
       {payload.map((p: any, i: number) => (
-        <p key={i} style={{ color: p.fill === "#111110" ? "var(--text-1)" : "var(--text-3)", margin: "2px 0" }}>
+        <p key={i} style={{ color: p.fill === CHART_SERIES.active ? "var(--text-1)" : "var(--text-2)", margin: "2px 0" }}>
           {p.name}: {p.value}m
         </p>
       ))}
@@ -66,8 +65,8 @@ export default function Dashboard({ date, onNavigate }: Props) {
               subtitle="Minutes used per hour"
               action={
                 <div style={{ display: "flex", gap: 12 }}>
-                  <LegendDot color="var(--accent)" label="Active" />
-                  <LegendDot color="var(--surface-3)" label="Idle" />
+                  <LegendDot color={CHART_SERIES.active} label="Active" />
+                  <LegendDot color={CHART_SERIES.idle} label="Idle" />
                 </div>
               }
             />
@@ -76,9 +75,9 @@ export default function Dashboard({ date, onNavigate }: Props) {
                 <CartesianGrid vertical={false} stroke="var(--border)" />
                 <XAxis dataKey="hour" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--text-3)", fontFamily: "var(--font-sans)" }} />
                 <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--text-3)", fontFamily: "var(--font-sans)" }} />
-                <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(0,0,0,0.02)" }} />
-                <Bar dataKey="active_min" stackId="a" fill="#111110" radius={[0, 0, 2, 2]} name="active" />
-                <Bar dataKey="idle_min"   stackId="a" fill="var(--surface-3)" radius={[3, 3, 0, 0]} name="idle" />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(37,99,235,0.06)" }} />
+                <Bar dataKey="active_min" stackId="a" fill={CHART_SERIES.active} radius={[0, 0, 2, 2]} name="active" />
+                <Bar dataKey="idle_min"   stackId="a" fill={CHART_SERIES.idle} radius={[3, 3, 0, 0]} name="idle" />
               </BarChart>
             </ResponsiveContainer>
           </Card>
@@ -91,7 +90,7 @@ export default function Dashboard({ date, onNavigate }: Props) {
               <PieChart width={130} height={130}>
                 <Pie data={categoryData} dataKey="value" innerRadius={38} outerRadius={58} strokeWidth={3} stroke="var(--surface)">
                   {categoryData.map((_, i) => (
-                    <Cell key={i} fill={CATEGORY_COLORS[i]} />
+                    <Cell key={i} fill={CHART_SERIES.category[i % CHART_SERIES.category.length]} />
                   ))}
                 </Pie>
               </PieChart>
@@ -100,7 +99,7 @@ export default function Dashboard({ date, onNavigate }: Props) {
               {categoryData.map(({ name, value }, i) => (
                 <div key={name} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
                   <span style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: CATEGORY_COLORS[i], display: "inline-block" }} />
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: CHART_SERIES.category[i % CHART_SERIES.category.length], display: "inline-block" }} />
                     {name}
                   </span>
                   <span style={{ color: "var(--text-2)" }}>{formatCatTime(value)}</span>
